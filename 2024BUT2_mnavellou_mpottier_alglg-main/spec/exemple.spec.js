@@ -1,29 +1,30 @@
-describe("Test de Pablo",() => {
+const mysql = require("mysql");
 
-    beforeAll() {
-        comm = mysql
-    }
+describe("test de Pablo", () => {
+  const connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "test_unitaire_bdd",
+  });
 
-    beforeEach() {
-        connection.beeginTransaction()
-    }
+  connection.connect();
 
-    it("test 1", ()=>{
-        let a = 2
-        let b = 2
-        expect(a+b).toBe(4)
-    })
+  beforeEach(function () {
+    connection.beginTransaction();
+  });
 
-    it("test 2", ()=>{
-        let a = 2
-        let b = 2
-        expect(a+b).toBe(4)
-    })
+  afterEach(function () {
+    connection.rollback();
+  });
 
-    aftereach() {
-		connexion.rollback()
-    }
-    afterall() {
-            connexion.end()
-    }
-})
+  afterAll(function () {
+    connection.end();
+  });
+
+  it("devrait faire des trucs", () => {
+    let a = 2; //appeler une fonction à la place
+    let b = 2; //appeler une fonction à la place
+    expect(a + b).toBe(4);
+  });
+});
